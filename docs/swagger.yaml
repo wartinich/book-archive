@@ -1,0 +1,32 @@
+basePath: /
+definitions:
+  model.Book:
+    properties:
+      id:
+        type: string
+      title:
+        type: string
+    type: object
+host: 127.0.0.1:8000
+info:
+  contact: {}
+  description: Book Archive API
+  title: Book Archive API
+  version: "1.0"
+paths:
+  /book:
+    post:
+      consumes:
+      - application/json
+      description: create book
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Book'
+      summary: Create book
+      tags:
+      - books
+swagger: "2.0"

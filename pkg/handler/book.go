@@ -6,6 +6,14 @@ import (
 	"net/http"
 )
 
+// CreateBook godoc
+// @Summary      Create book
+// @Description  create book
+// @Tags         books
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  model.Book
+// @Router       /book [post]
 func CreateBook(c *gin.Context) {
 	var newBook model.Book
 
