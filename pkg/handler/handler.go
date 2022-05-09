@@ -5,18 +5,18 @@ import "github.com/gin-gonic/gin"
 func Handler() *gin.Engine {
 	router := gin.Default()
 
-	book := router.Group("/book")
+	book := router.Group("")
 	{
-		book.POST("", CreateBook)
-		book.GET("/list", BookList)
-		book.GET("/:id", BookDetail)
+		book.POST("/book", CreateBook)
+		book.GET("/books", BookList)
+		book.GET("/book/:id", BookDetail)
 	}
 
-	author := router.Group("/author")
+	author := router.Group("")
 	{
-		author.POST("", CreateAuthor)
-		author.GET("/list", AuthorList)
-		author.GET("/:id", AuthorDetail)
+		author.POST("/author", CreateAuthor)
+		author.GET("/authors", AuthorList)
+		author.GET("/author/:id", AuthorDetail)
 	}
 
 	return router

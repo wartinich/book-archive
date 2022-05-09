@@ -22,6 +22,7 @@ func main() {
 	r := handler.Handler()
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+	go func() {}()
 	r.Run(viper.GetString("port"))
 }
 

@@ -1,8 +1,21 @@
 basePath: /
 definitions:
-  model.Book:
+  model.Author:
     properties:
       id:
+        type: string
+      name:
+        type: string
+    type: object
+  model.Book:
+    properties:
+      author_id:
+        $ref: '#/definitions/model.Author'
+      description:
+        type: string
+      id:
+        type: string
+      publish_date:
         type: string
       title:
         type: string
@@ -14,11 +27,93 @@ info:
   title: Book Archive API
   version: "1.0"
 paths:
+  /author:
+    post:
+      consumes:
+      - application/json
+      description: create author
+      operationId: create-author
+      parameters:
+      - description: list info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.Author'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create author
+      tags:
+      - authors
+  /author/:id:
+    get:
+      consumes:
+      - application/json
+      operationId: author-detail
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Author'
+      summary: Author detail
+      tags:
+      - authors
+  /authors:
+    get:
+      consumes:
+      - application/json
+      description: author list
+      operationId: author-list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Author'
+      summary: Author list
+      tags:
+      - authors
   /book:
     post:
       consumes:
       - application/json
       description: create book
+      operationId: create-book
+      parameters:
+      - description: list info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.Book'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create book
+      tags:
+      - books
+  /book/:id:
+    get:
+      consumes:
+      - application/json
+      description: book detail
+      operationId: book-detail
+      parameters:
+      - description: id
+        in: query
+        name: id
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -26,7 +121,23 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/model.Book'
-      summary: Create book
+      summary: Book detail
+      tags:
+      - books
+  /books:
+    get:
+      consumes:
+      - application/json
+      description: book list
+      operationId: book-list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Book'
+      summary: Book list
       tags:
       - books
 swagger: "2.0"
