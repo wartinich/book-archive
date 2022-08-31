@@ -1,12 +1,12 @@
-package main
+package app
 
 import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	_ "github.com/wartinich/web/docs"
-	"github.com/wartinich/web/pkg/handler"
+	_ "github.com/wartinich/book-archive/docs"
+	"github.com/wartinich/book-archive/internal/delivery/http"
 )
 
 // @title           Book Archive API
@@ -14,12 +14,12 @@ import (
 // @description     Book Archive API
 // @host            127.0.0.1:8000
 // @BasePath  		/
-func main() {
+func Run() {
 	if err := InitConfig(); err != nil {
 		logrus.Fatalf("Error init config: %s", err.Error())
 	}
 
-	r := handler.Handler()
+	r := http.Handler()
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	go func() {}()
