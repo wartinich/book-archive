@@ -6,3 +6,6 @@ build:
 
 down:
 	docker-compose down book-archive
+
+swag:
+	swag init -g internal/app/app.go
