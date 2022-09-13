@@ -1,1 +1,9 @@
 port: ":8000"
+
+db:
+  username: "book-archive_user"
+  password: "book-archive_password"
+  host: "localhost"
+  port: "5436"
+  dbname: "book-archive"
+  sslmode: "disable"
