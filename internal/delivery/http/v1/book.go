@@ -1,9 +1,10 @@
-package handler
+package v1
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/wartinich/web/pkg/model"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/wartinich/book-archive/internal/domain"
 )
 
 // CreateBook    godoc
@@ -16,13 +17,13 @@ import (
 // @Produce      json
 // @Router       /book [post]
 func CreateBook(c *gin.Context) {
-	var newBook model.Book
+	var newBook domain.Book
 
 	if err := c.BindJSON(&newBook); err != nil {
 		return
 	}
 
-	model.Books = append(model.Books, newBook)
+	domain.Books = append(domain.Books, newBook)
 	c.IndentedJSON(http.StatusCreated, newBook)
 }
 
@@ -36,7 +37,7 @@ func CreateBook(c *gin.Context) {
 // @Success      200  {object}  model.Book
 // @Router       /books [get]
 func BookList(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, model.Books)
+	c.IndentedJSON(http.StatusOK, domain.Books)
 }
 
 // BookDetail	 godoc
@@ -52,7 +53,7 @@ func BookList(c *gin.Context) {
 func BookDetail(c *gin.Context) {
 	id := c.Param("id")
 
-	for _, book := range model.Books {
+	for _, book := range domain.Books {
 		if book.Id == id {
 			c.IndentedJSON(http.StatusOK, book)
 			return

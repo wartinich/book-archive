@@ -1,5 +1,8 @@
-.idea/
 .idea
+.vscode
+.data
+.env
+
 *.exe
 *.exe~
 *.dll

@@ -1,28 +1,29 @@
-package handler
+package v1
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/wartinich/web/pkg/model"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/wartinich/book-archive/internal/domain"
 )
 
 // CreateAuthor  godoc
 // @Summary      Create author
 // @Description  create author
 // @ID           create-author
-// @Param        input body model.Author true "list info"
+// @Param        input body domain.Author true "list info"
 // @Tags         authors
 // @Accept       json
 // @Produce      json
 // @Router       /author [post]
 func CreateAuthor(c *gin.Context) {
-	var newAuthor model.Author
+	var newAuthor domain.Author
 
 	if err := c.BindJSON(&newAuthor); err != nil {
 		return
 	}
 
-	model.Authors = append(model.Authors, newAuthor)
+	domain.Authors = append(domain.Authors, newAuthor)
 	c.IndentedJSON(http.StatusCreated, newAuthor)
 }
 
@@ -36,7 +37,7 @@ func CreateAuthor(c *gin.Context) {
 // @Success      200  {object}  model.Author
 // @Router       /authors [get]
 func AuthorList(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, model.Authors)
+	c.IndentedJSON(http.StatusOK, domain.Authors)
 }
 
 // AuthorDetail	 godoc
@@ -51,7 +52,7 @@ func AuthorList(c *gin.Context) {
 func AuthorDetail(c *gin.Context) {
 	id := c.Param("id")
 
-	for _, author := range model.Authors {
+	for _, author := range domain.Authors {
 		if author.Id == id {
 			c.IndentedJSON(http.StatusOK, author)
 			return

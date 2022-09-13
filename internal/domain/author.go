@@ -1,4 +1,4 @@
-package model
+package domain
 
 type Author struct {
 	Id   string `json:"id"`

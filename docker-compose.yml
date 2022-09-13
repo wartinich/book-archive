@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  book-archive:
+    build: ./
+    command: ./book-archive
+    ports:
+      - 8000:8000
+    depends_on:
+      - db 
+
+  db:
+    image: postgres:latest
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 5436:5432
+    volumes:
+    - ./.data/postgres/data:/var/lib/postgresql/data
+    
