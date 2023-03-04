@@ -43,3 +43,15 @@ func BookDetail(c *gin.Context) {
   
 	c.IndentedJSON(http.StatusOK, book)
 }
+
+func DeleteBook(c *gin.Context) {
+	id := c.Param("id")
+	var book domain.Book
+  
+	if err := domain.DB.Where("id = ?", id).Delete(&book).Error; err != nil {
+	  c.JSON(http.StatusBadRequest, gin.H{"error": "Book not found!"})
+	  return
+	}
+  
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "Book delete completed"})
+}

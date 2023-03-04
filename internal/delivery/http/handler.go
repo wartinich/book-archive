@@ -13,6 +13,7 @@ func Handler() *gin.Engine {
 		book.POST("/books", v1.CreateBook)
 		book.GET("/books", v1.BookList)
 		book.GET("/books/:id", v1.BookDetail)
+		book.DELETE("/books/:id", v1.DeleteBook)
 	}
 
 	author := router.Group("")
