@@ -19,7 +19,11 @@ func CreateBook(c *gin.Context) {
 }
 
 func BookList(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, domain.Books)
+	var books []domain.Book
+
+	domain.DB.Find(&books)
+
+	c.IndentedJSON(http.StatusOK, books)
 }
 
 func BookDetail(c *gin.Context) {
