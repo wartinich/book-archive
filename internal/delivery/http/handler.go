@@ -12,7 +12,7 @@ func Handler() *gin.Engine {
 	{
 		book.POST("/books", v1.CreateBook)
 		book.GET("/books", v1.BookList)
-		book.GET("/book/:id", v1.BookDetail)
+		book.GET("/books/:id", v1.BookDetail)
 	}
 
 	author := router.Group("")
