@@ -10,16 +10,16 @@ func Handler() *gin.Engine {
 
 	book := router.Group("")
 	{
-		book.POST("/book", v1.CreateBook)
+		book.POST("/books", v1.CreateBook)
 		book.GET("/books", v1.BookList)
 		book.GET("/book/:id", v1.BookDetail)
 	}
 
 	author := router.Group("")
 	{
-		author.POST("/author", v1.CreateAuthor)
+		author.POST("/authors", v1.CreateAuthor)
 		author.GET("/authors", v1.AuthorList)
-		author.GET("/author/:id", v1.AuthorDetail)
+		author.GET("/authors/:id", v1.AuthorDetail)
 	}
 
 	return router
