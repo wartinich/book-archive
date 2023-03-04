@@ -5,17 +5,23 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/wartinich/book-archive/internal/domain"
+	"github.com/google/uuid"
 )
 
 func CreateBook(c *gin.Context) {
-	var newBook domain.Book
+	var input domain.CreateBookInput
 
-	if err := c.BindJSON(&newBook); err != nil {
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	domain.Books = append(domain.Books, newBook)
-	c.IndentedJSON(http.StatusCreated, newBook)
+	id := uuid.New()
+
+	book := domain.Book{Id: id.String(), Title: input.Title, Description: input.Description}
+	domain.DB.Create(&book)
+
+	c.IndentedJSON(http.StatusCreated, book)
 }
 
 func BookList(c *gin.Context) {
@@ -28,13 +34,12 @@ func BookList(c *gin.Context) {
 
 func BookDetail(c *gin.Context) {
 	id := c.Param("id")
-
-	for _, book := range domain.Books {
-		if book.Id == id {
-			c.IndentedJSON(http.StatusOK, book)
-			return
-		}
+	var book domain.Book
+  
+	if err := domain.DB.Where("id = ?", id).First(&book).Error; err != nil {
+	  c.JSON(http.StatusBadRequest, gin.H{"error": "Book not found!"})
+	  return
 	}
-
-	c.IndentedJSON(http.StatusNotFound, gin.H{"Book": "Not exist"})
+  
+	c.IndentedJSON(http.StatusOK, book)
 }
